@@ -1,0 +1,100 @@
+<head>
+  <title>Youtube Search</title>
+</head>
+
+<body>
+  <h1>Youtube Search</h1>
+
+  {{> hello}}
+</body>
+
+<template name="hello">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta
+    name="google-signin-client_id"
+    content="10405121594-g54gi6jbvvb4bp2qkkv0avhgk7qjn6nn.apps.googleusercontent.com"
+  />
+  <div class="row">
+  <div class="g-signin2" data-onsuccess="onSignIn"></div> <br><a href="home" class="col-lg-4 col-sm-4" onclick="signOut();">Sign out</a>
+</div>
+  <form id="search">
+      <div class="row">
+        <div class="col-lg-6 col-sm-6" style="text-align: left;margin-top:10px">
+          <div class="input-group">
+            <span class="input-group-addon">Keyword</span>
+            <input
+              type="text"
+              name="search"
+              class="form-control"
+              placeholder="dog"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <div
+            class="col-sm-offset-2 col-sm-3"
+            style="text-align: left;margin-top:10px"
+          >
+            <button type="submit" name="repro" class="btn btn-primary">
+              <i class="fa fa-plus"></i> Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col" style="text-align: center;">No</th>
+                <th scope="col" style="text-align: center;">Thumbnails</th>
+                <th scope="col" style="text-align: center;">Title</th>
+                <th scope="col" style="text-align: center;">Description</th>
+                <th scope="col" style="text-align: center;">Channel Name</th>
+                <th scope="col" style="text-align: center;">Link</th>
+                <th scope="col" style="text-align: center;">Published</th>
+                <th scope="col" style="text-align: center;">Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each item in search}}
+            <tr>
+                <td scope="col" style="text-align: center;">{{No @index}}</td>
+                <td scope="col" style="text-align: center;"><img src="{{item.thumbnails}}" alt="Smiley face" height="42" width="42"></td>
+                <td scope="col" style="text-align: center;">{{item.title}}</td>
+                <td scope="col" style="text-align: center;">{{item.description}}</td>
+                <td scope="col" style="text-align: center;">{{item.channelTitle}}</td>
+                <td scope="col" style="text-align: center;">{{item.link}}</td>
+                <td scope="col" style="text-align: center;">{{item.publishedAt}}</td>
+                <td scope="col" style="text-align: center;">{{item.kind}}</td>
+           </tr>
+           {{/each}}
+        </tbody>
+    </table>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <script>
+  $("#search").hide();
+  $('.table-striped').hide()
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log("Name: " + profile.getName());
+      console.log("Image URL: " + profile.getImageUrl());
+      console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+      if (profile.getId()) {
+        $("#search").show();
+        $(".table-striped").show()
+      }
+    }
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function() {
+        console.log("User signed out.");
+      });
+    }
+  </script>
+  <br />
+</template>
