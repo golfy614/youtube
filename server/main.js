@@ -22,7 +22,7 @@ Meteor.startup(() => {
 async function searchByKeyword(keyword) {
   var opts = {
     maxResults: 10,
-    key: 'AIzaSyCDuIn90TwxPblfDDzMZZp2JaHsqY28Ly0'
+    key: 'AIzaSyBw2-Lwz1zCjI1OWm6YMbysbVOvPoudpHE'
   };
   return new Promise(async (resolve, reject) => {
   search(keyword, opts, function(err, results) {
